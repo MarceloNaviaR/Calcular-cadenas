@@ -1,34 +1,21 @@
-import Gastos from "./gastos";
+// presenter.js
 
-const fecha = document.querySelector("#fecha");
-const monto = document.querySelector("#monto");
-const descripcion = document.querySelector("#descripcion");
+// Esta es la función que calculará el resultado
+export function calcular() {
+  const cadena = document.getElementById('cadena').value;  // Obtener la cadena desde el input
+  const resultado = procesarCadena(cadena);  // Procesar la cadena
+  document.getElementById('resultado').textContent = resultado;  // Mostrar el resultado en el <span>
+}
 
-const form = document.querySelector("#gastos-form");
-const gastosdiv = document.querySelector("#gastos-div");
-const gastos = new Gastos();
-
-form.addEventListener("submit", (event) => {
-  event.preventDefault();
-  const fechaValue = fecha.value;
-  const montoValue = Number.parseInt(monto.value);
-  const descripcionValue = descripcion.value;
+// Función para procesar la cadena (puedes personalizarla según tu necesidad)
+function procesarCadena(cadena) {
+  if (cadena === '') {
+      return 'Por favor ingresa una cadena';  // Si la cadena está vacía
+  }
   
-  const gasto = {
-    fecha: fechaValue,
-    monto: montoValue,
-    descripcion: descripcionValue,
-  };
-  gastos.registrarGasto(gasto);
-  
-  const gastosRegistrados = gastos.obtenerGastos();
-  console.log("gastos: "+ gastosRegistrados);
-  console.log("gastos registrados: "+gastosRegistrados);
+  // Ejemplo simple de operación: invertir la cadena
+  return cadena.split('').reverse().join('');
+}
 
-  gastosdiv.innerHTML = "<ul>";  
-  gastosRegistrados.forEach((gastoRegistrado) => {
-    gastosdiv.innerHTML+= 
-       "<li>"+gastoRegistrado.fecha+"  "+gastoRegistrado.monto+"  "+gastoRegistrado.descripcion+"</li>";
-    });
-  gastosdiv.innerHTML+= "</ul>";
-});
+// Agregar el evento de clic al botón cuando se cargue el archivo
+document.getElementById('calcular-btn').addEventListener('click', calcular);
